@@ -1,29 +1,62 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using OnlineEdu.repository;
 using OnlineEdu.Data;
 
 namespace OnlineEdu.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
-    public class SubmissionController : ControllerBase
+    public class SubmissionsController : ControllerBase
     {
-        private CoursePortalDbContext _context;
-        public SubmissionController(CoursePortalDbContext context)
+        private readonly ISubmissionRepo _repository;
+
+        public SubmissionsController(ISubmissionRepo repository)
         {
-            _context = context;
+            _repository = repository;
         }
+
+        [HttpGet("Getallsubmission")]
+        public ActionResult<IEnumerable<Submission>> GetAllSubmissions()
+        {
+            var submissions = _repository.GetAllSubmissions();
+            return Ok(submissions);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Submission> GetSubmissionById(int id)
+        {
+            var submission = _repository.GetSubmissionById(id);
+            if (submission == null)
+            {
+                return NotFound();
+            }
+            return Ok(submission);
+        }
+
         [HttpPost]
-        public void Create([FromBody] Submission Submission)
+        public ActionResult<Submission> PostSubmission([FromBody] Submission submission)
         {
-            _context.Submissions.Add(Submission);
-            _context.SaveChanges();
+            _repository.AddSubmission(submission);
+            return CreatedAtAction(nameof(GetSubmissionById), new { id = submission.SubmissionId }, submission);
         }
-        [HttpGet]
-        public List<Submission> GetEvents()
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateSubmission(int id, [FromBody] Submission submission)
         {
-            return _context.Submissions.ToList();
+            if (id != submission.SubmissionId)
+            {
+                return BadRequest();
+            }
+            _repository.UpdateSubmission(submission);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteSubmission(int id)
+        {
+            _repository.DeleteSubmission(id);
+            return NoContent();
         }
     }
 }
-
