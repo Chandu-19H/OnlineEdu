@@ -8,13 +8,13 @@ namespace OnlineEdu.Data
         
         public int EnrollmentId { get; set; }
         [Required]
-        public int StudentId { get; internal set; }
+        public int StudentId { get; set; }
        
         [Required]
         public int CourseId { get; set; }
         [Required]
-        public double Progress {  get; set; }
-        public virtual Student Student { get; set; }
-        public virtual Course Course { get; set; }
+        public int Progress {  get; set; }
+        public Student Student { get; set; }
+        public Course Course { get; set; }
     }
 }

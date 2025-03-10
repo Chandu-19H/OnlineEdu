@@ -11,7 +11,7 @@ using OnlineEdu.Data;
 namespace OnlineEdu.Migrations
 {
     [DbContext(typeof(CoursePortalDbContext))]
-    [Migration("20250304120630_InitialCreate")]
+    [Migration("20250307064300_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -130,6 +130,13 @@ namespace OnlineEdu.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
+
+                    b.Property<string>("Interests")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NoOfCoursesEnrolled")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
