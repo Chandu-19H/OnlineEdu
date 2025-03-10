@@ -16,6 +16,7 @@ builder.Services.AddDbContext<OnlineEdu.Data.CoursePortalDbContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IEnrollmentRepository, Enrollmentrepository>();
 builder.Services.AddScoped<ISubmissionRepo, SubmissionRepo>();
+builder.Services.AddScoped<IAssessmentrepository, Assessmentrepository>();
 builder.Services.AddSwaggerGen();
 
 
