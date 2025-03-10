@@ -75,10 +75,5 @@ namespace OnlineEdu.Data
                 .HasForeignKey(s => s.StudentId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
-
-        internal Enrollment FirstOrDefault(Func<object, bool> value)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
